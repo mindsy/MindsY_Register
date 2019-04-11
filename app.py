@@ -2,7 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.congig['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/daniel/Documents/MDS/SignIn/mindsy.db'
+app.config['SECRET_KEY'] = 'mindsy'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/daniel/Documents/MDS/mindsy-microservice-register/mindsy.db'
 db = SQLAlchemy(app)
 
 
@@ -28,10 +29,10 @@ class NaturalPerson(db.Model):
 
 class Psychologist(db.Model):
     crp = db.Column(db.Integer, primary_key=True, autoincrement=False)
-    owner4_id = db.Column(db.Integer, db.ForeignKey('legal_person.id'))
+    owner4_id = db.Column(db.Integer, db.ForeignKey('natural_person.cpf'))
 
 
-class LegalPerson(db.person):
+class LegalPerson(db.Model):
     cnpj = db.Column(db.Integer, primary_key=True, autoincrement=False)
     owner3_id = db.Column(db.Integer, db.ForeignKey('person.id'))
 
