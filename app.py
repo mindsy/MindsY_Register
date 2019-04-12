@@ -71,39 +71,34 @@ def create_user():
 @app.route('/user', methods=['GET'])
 def get_all_users():
 
-    output = {}
+    output = []
 
-    users = Person.query.all()
-    for user in users:
-        user_data = {'name': user.name, 'email': user.email}
-        output.update(user_data)
-
-    users = Telephone.query.all()
-    for user in users:
-        user_data = {'number': user.number}
-        output.update(user_data)
-
-    users = NaturalPerson.query.all()
-    for user in users:
-        user_data = {'cpf': user.cpf, }
-        output.update(user_data)
-
-    users = Psychologist.query.all()
-    for user in users:
-        user_data = {'crp': user.crp, 'password': user.password}
-        output.update(user_data)
+    person = Person.query.all()
+    for user in person:
+        flag_user = Person.query.filter_by(public_id=user.public_id).first()
+        flag1_user = NaturalPerson.query.filter_by(cpf=flag_user.natural_person[0].cpf).first()
+        user_data = {'name': user.name, 'email': user.email, 'public id': user.public_id,
+                     'telephone': flag_user.telephone[0].number,
+                     'cpf': flag_user.natural_person[0].cpf, 'crp': flag1_user.psychologist[0].crp,
+                     'password': flag1_user.psychologist[0].password}
+        output.append(user_data)
 
     return jsonify({'users': output})
 
-
 # @app.route('/user/<public_id>', methods=['GET'])
 # def get_one_user(public_id):
-#     user = Person.query.filter_by(public_id=public_id).first()
+#     person = Person.query.filter_by(public_id=public_id).first()
+#     telephone = Telephone.query.filter_by(onwer1=public_id).first()
+#     natural = NaturalPerson.query.filter_by(owner2=public_id).first()
+#     psychologist = Psychologist.query.filter_by(owner4=).first()
 #
-#     if not user:
+#     if not person:
 #         return jsonify({'message': "No user found!"})
 #
-#     user_data = {'public_id': user.public_id, 'name': user.name, 'email': user.email}
+#     user_data = {'public_id': person.public_id, 'name': person.name, 'email': person.email,
+#                  'telephone': telephone.number, 'cpf': natural.cpf, 'crp': psychologist.crp,
+#                  'password': psychologist.password}
+#
 #     return jsonify({'user': user_data})
 
 
