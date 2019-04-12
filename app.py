@@ -4,6 +4,7 @@ import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = 'mindsy'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/daniel/Documents/MDS/mindsy-microservice-register/mindsy.db'
 
@@ -21,7 +22,7 @@ class Person(db.Model):
 
 
 class Telephone(db.Model):
-    number = db.Column(db.String(11), primary_key=True, autoincrement=False)
+    number = db.Column(db.Integer, primary_key=True, autoincrement=False)
     owner1_id = db.Column(db.Integer, db.ForeignKey('person.id'))
 
 
@@ -67,8 +68,48 @@ def create_user():
     return jsonify({'message': 'New user created'})
 
 
+@app.route('/user', methods=['GET'])
+def get_all_users():
+
+    output = {}
+
+    users = Person.query.all()
+    for user in users:
+        user_data = {'name': user.name, 'email': user.email}
+        output.update(user_data)
+
+    users = Telephone.query.all()
+    for user in users:
+        user_data = {'number': user.number}
+        output.update(user_data)
+
+    users = NaturalPerson.query.all()
+    for user in users:
+        user_data = {'cpf': user.cpf, }
+        output.update(user_data)
+
+    users = Psychologist.query.all()
+    for user in users:
+        user_data = {'crp': user.crp, 'password': user.password}
+        output.update(user_data)
+
+    return jsonify({'users': output})
+
+
+# @app.route('/user/<public_id>', methods=['GET'])
+# def get_one_user(public_id):
+#     user = Person.query.filter_by(public_id=public_id).first()
+#
+#     if not user:
+#         return jsonify({'message': "No user found!"})
+#
+#     user_data = {'public_id': user.public_id, 'name': user.name, 'email': user.email}
+#     return jsonify({'user': user_data})
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
-
-# {"name": "Daniel", "password" : "12345", "email": "daniel_sousa.unb@hotmail.com", "number": "61123456789", "crp": "01/123445", "cpf": "12345678912"}
+# return jsonify({'users': all_users})
+# {"name": "Daniel", "password" : "12345", "email": "daniel_sousa.unb@hotmail.com",
+# "number": "61123456789", "crp": "01/123445", "cpf": "12345678912"}
