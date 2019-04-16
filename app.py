@@ -17,9 +17,9 @@ class Person(db.Model):
     name = db.Column(db.String)
     email = db.Column(db.String)
     cpf = db.Column(db.String(11))
-    telephone = db.relationship('Telephone', backref='tel_person', lazy='dynamic', uselist=True)
-    hospital = db.relationship('Hospital', backref='hospital_person', lazy='dynamic', uselist=False)
-    psychologist = db.relationship('Psychologist', backref='person_psy', lazy='dynamic', uselist=False)
+    telephone = db.relationship('Telephone', backref='tel_person', lazy='dynamic')
+    hospital = db.relationship('Hospital', backref='hospital_person', uselist=False)
+    psychologist = db.relationship('Psychologist', backref='person_psy', uselist=False)
 
 
 class Telephone(db.Model):
@@ -51,5 +51,37 @@ class HospitalPsychologist(db.Model):
                               primary_key=True, autoincrement=False)
 
 
+@app.route('/user', methods=['POST'])
+def create_user():
+    data = request.get_json()
+
+    hashed_password = generate_password_hash(data['password'], method='sha256')
+
+    new_person = Person(public_id=str(uuid.uuid4()), name=data['name'], email=data['email'], cpf=data['cpf'])
+    db.session.add(new_person)
+    db.session.commit()
+
+    new_telephone = Telephone(number=data['number'], tel_person=new_person)
+    db.session.add(new_telephone)
+    db.session.commit()
+
+    new_hospital = Hospital(cnpj=data['cnpj'], social_reason=data['social_reason'], hospital_person=new_person)
+    db.session.add(new_hospital)
+    db.session.commit()
+
+    new_psychologist = Psychologist(crp=data['crp'], password=hashed_password, date_of_birth=data['date_of_birth'],
+                                    person_psy=new_person)
+    db.session.add(new_psychologist)
+    db.session.commit()
+
+    new_hospital_psychologist = HospitalPsychologist(initial_date=data['initial_date'],
+                                                     crp_psychologist=new_psychologist, hospital=new_hospital)
+    db.session.add(new_hospital_psychologist)
+    db.session.commit()
+
+    return jsonify({'message': 'New user created'})
+
+
 if __name__ == '__main__':
     app.run(debug=True)
+
