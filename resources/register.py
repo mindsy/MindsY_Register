@@ -63,13 +63,16 @@ class Register(Resource):
         new_psychologist = PsychologistModel(data['crp'], data['password'],data['date_of_birth'], new_person)
         new_psychologist.save_to_db()
 
-        new_hospital_person = PersonModel("Hospital da Criança", "hospitalCrianca@gmail.com")
-        new_hospital = HospitalModel("4002", "HOSPITAL DA CRIANÇA LTDA", new_hospital_person)
+        if not HospitalModel.find_by_registry_number("4002"):
+            new_hospital_person = PersonModel("Hospital da Criança", "hospitalCrianca@gmail.com")
+            new_hospital = HospitalModel("4002", "HOSPITAL DA CRIANÇA LTDA", new_hospital_person)
+            new_psychologist_hospital = PsychologistHospitalModel(new_hospital, new_psychologist)
+            new_psychologist_hospital.save_to_db()
+            new_hospital_person.save_to_db()
+            new_hospital.save_to_db()
 
-        new_hospital_person.save_to_db()
-        new_hospital.save_to_db()
-
-        new_psychologist_hospital = PsychologistHospitalModel(new_hospital, new_psychologist)
-        new_psychologist_hospital.save_to_db()
+        else:
+            new_psychologist_hospital = PsychologistHospitalModel(HospitalModel.find_by_registry_number("4002"), new_psychologist)
+            new_psychologist_hospital.save_to_db()
 
         return {"message": "User created successfully."}, 201
