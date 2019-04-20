@@ -3,6 +3,7 @@ from models.person import PersonModel
 from models.telephone import TelephoneModel
 from models.psychologist import PsychologistModel
 from models.hospital import HospitalModel
+from models.psychologist_hospital import PsychologistHospitalModel
 
 class Register(Resource):
 
@@ -67,5 +68,8 @@ class Register(Resource):
 
         new_hospital_person.save_to_db()
         new_hospital.save_to_db()
+
+        new_psychologist_hospital = PsychologistHospitalModel(new_hospital, new_psychologist)
+        new_psychologist_hospital.save_to_db()
 
         return {"message": "User created successfully."}, 201
