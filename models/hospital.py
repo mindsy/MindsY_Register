@@ -1,6 +1,5 @@
 from db import db
 
-
 class HospitalModel(db.Model):
     __tablename__ = 'hospital'
 

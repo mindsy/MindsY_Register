@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask_restful import Resource, reqparse, request
 from models.person import PersonModel
 from models.telephone import TelephoneModel

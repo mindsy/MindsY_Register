@@ -1,8 +1,8 @@
 version: '3'
 services:
-        frontend:
-                container_name: 'mindsy_frontend'
-                build: .
+        mindsy-microservice-psychologist:
+                container_name: 'mindsy-microservice-psychologist'
+                build: '.'
                 ports: 
-                        - "3000:5000"
+                - "3000:5000"
 
