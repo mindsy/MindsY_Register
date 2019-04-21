@@ -1,6 +1,5 @@
 from db import db
 
-
 class TelephoneModel(db.Model):
     __tablename__ = 'telephone'
 

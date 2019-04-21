@@ -1,4 +1,5 @@
 flask
 werkzeug
 coverage
-
+db
+flask_restful
