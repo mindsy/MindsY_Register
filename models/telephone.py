@@ -16,7 +16,7 @@ class TelephoneModel(db.Model):
         self.tel_person = tel_person
 
     def json(self):
-        return {'number': self.number, 'telephone_type': self.telephone_type, 'tel_person_id': self.tel_person_id}
+        return {'number': self.number, 'telephone_type': self.telephone_type}
 
     @classmethod
     def find_by_number(cls, number):

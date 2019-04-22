@@ -44,12 +44,17 @@ class Register(Resource):
                         required=True,
                         help="This field cannot be blank."
                         )
-    parser.add_argument('date_of_birth',
+
+    parser.add_argument('registry_number',
                         type=str,
-                        required=True,
-                        help="This field cannot be blank."
+                        required=False
                         )
-    def post(self):
+    parser.add_argument('social_reason',
+                        type=str,
+                        required=False
+                        )
+
+    def create_user(self):
         data = Register.parser.parse_args()
 
         if PersonModel.find_by_email(data['email']):
@@ -82,5 +87,86 @@ class Register(Resource):
             new_psychologist_hospital = PsychologistHospitalModel(HospitalModel.find_by_registry_number("4002"), new_psychologist)
             new_psychologist_hospital.save_to_db()
 
+    def post(self):
+        self.create_user()
         return {"message": "User created successfully."}, 201
-        
+
+class Edit(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('name',
+                        type=str,
+                        required=False,
+                        help="This field cannot be blank."
+                        )
+    parser.add_argument('email',
+                        type=str,
+                        required=False,
+                        help="This field cannot be blank."
+                        )
+    parser.add_argument('number',
+                        type=int,
+                        required=False,
+                        help="This field cannot be blank."
+                        )
+    parser.add_argument('telephone_type',
+                        type=str,
+                        required=False,
+                        help="This field cannot be blank."
+                        )
+
+    parser.add_argument('password',
+                        type=str,
+                        required=False,
+                        help="This field cannot be blank."
+                        )
+    parser.add_argument('date_of_birth',
+                        type=str,
+                        required=False,
+                        help="This field cannot be blank."
+                        )
+
+    parser.add_argument('registry_number',
+                        type=str,
+                        required=False
+                        )
+    parser.add_argument('social_reason',
+                        type=str,
+                        required=False
+                        )
+    def put(self, id):
+        data = Edit.parser.parse_args()
+
+        person = PersonModel.find_by_id(id)
+
+        if person:
+            if data['name']:
+                person.name = data['name']
+            if data['email']:
+                person.email = data['email']
+            if data['number']:
+                person.telephones[0].number = data['number']
+            if data['telephone_type']:
+                person.telephones[0].telephone_type = data['telephone_type']
+            if data['date_of_birth']:
+                person.psychologists.date_of_birth = data['date_of_birth']
+            if data['password']:
+                person.psychologists.password = data['password']
+            if data['registry_number']:
+                person.hospitals.registry_number = data['registry_number']
+            if data['social_reason']:
+                person.hospitals.social_reason = data['social_reason']
+        else:
+            return {'message': 'User not found.'}, 404
+
+        person.save_to_db()
+
+        return {"message": "Ok"}, 200
+
+# {"name": "tactel", 
+# "email": "tactelzeras@gmail.com",
+# "number": "111111",
+# "telephone_type": "residencial",
+# "password": "mudeiasenha",
+# "date_of_birth": "12/09/1999",
+# "crp": "123456"
+# }
