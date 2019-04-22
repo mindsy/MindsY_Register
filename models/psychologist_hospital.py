@@ -1,5 +1,6 @@
 from db import db
 
+
 class PsychologistHospitalModel(db.Model):
     __tablename__ = 'psychologist_hospital'
 
@@ -14,7 +15,7 @@ class PsychologistHospitalModel(db.Model):
         self.crp_psychologist = crp_psychologist
 
     @classmethod
-    def find_by_name(cls, id):
+    def find_by_id(cls, id):
         return cls.query.filter_by(id= cls.id_psycho_hosp).first()
 
     def save_to_db(self):

@@ -1,5 +1,6 @@
 from db import db
 
+
 class PsychologistModel(db.Model):
     __tablename__ = 'psychologist'
 
@@ -20,7 +21,7 @@ class PsychologistModel(db.Model):
         return {'crp': self.crp, 'date_of_birth':self.date_of_birth}
 
     @classmethod
-    def find_by_name(cls, crp):
+    def find_by_crp(cls, crp):
         return cls.query.filter_by(crp=crp).first()
 
     def save_to_db(self):

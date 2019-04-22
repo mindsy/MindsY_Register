@@ -1,5 +1,6 @@
 from db import db
 
+
 class TelephoneModel(db.Model):
     __tablename__ = 'telephone'
 
@@ -18,7 +19,7 @@ class TelephoneModel(db.Model):
         return {'number': self.number, 'telephone_type': self.telephone_type, 'tel_person_id': self.tel_person_id}
 
     @classmethod
-    def find_by_name(cls, number):
+    def find_by_number(cls, number):
         return cls.query.filter_by(number=number).first()
 
     def save_to_db(self):

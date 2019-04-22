@@ -53,8 +53,14 @@ class Register(Resource):
         data = Register.parser.parse_args()
 
         if PersonModel.find_by_email(data['email']):
-            return {"message": "A user with that username already exists"}, 400
+            return {"message": "A user with that email already exists"}, 400
+        
+        if PsychologistModel.find_by_crp(data['crp']):
+            return {"message": "A user with that crp already exists"}, 400
 
+        if TelephoneModel.find_by_number(data['number']):
+            return {"message": "A user with that number already exists"}, 400
+        
         new_person = PersonModel(data['name'], data['email'])
         new_person.save_to_db()
 
@@ -77,3 +83,4 @@ class Register(Resource):
             new_psychologist_hospital.save_to_db()
 
         return {"message": "User created successfully."}, 201
+        

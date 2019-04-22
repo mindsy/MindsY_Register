@@ -1,5 +1,6 @@
 from db import db
 
+
 class HospitalModel(db.Model):
     __tablename__ = 'hospital'
 
@@ -13,12 +14,12 @@ class HospitalModel(db.Model):
         self.registry_number = registry_number
         self.social_reason = social_reason
         self.hospital_person = hospital_person
-
+    
     def json(self):
          return {'registry_number': self.registry_number, 'social_reason': self.social_reason}
 
     @classmethod
-    def find_by_name(cls, registry_number):
+    def find_by_registry_number(cls, registry_number):
         return cls.query.filter_by(registry_number=registry_number).first()
 
     def save_to_db(self):
