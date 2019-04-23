@@ -76,8 +76,8 @@ class Register(Resource):
         new_psychologist.save_to_db()
 
         if not HospitalModel.find_by_registry_number("4002"):
-            new_hospital_person = PersonModel("Hospital da Crianca", "hospitalCrianca@gmail.com")
-            new_hospital = HospitalModel("4002", "HOSPITAL DA CRIANA LTDA", new_hospital_person)
+            new_hospital_person = PersonModel("Hospital da Criança", "hospitalCrianca@gmail.com")
+            new_hospital = HospitalModel("4002", "HOSPITAL DA CRIANÇA LTDA", new_hospital_person)
             new_psychologist_hospital = PsychologistHospitalModel(new_hospital, new_psychologist)
 
             new_psychologist_hospital.save_to_db()

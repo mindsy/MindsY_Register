@@ -8,9 +8,9 @@ class PersonModel(db.Model):
     name = db.Column(db.String)
     email = db.Column(db.String)
 
-    telephones = db.relationship('TelephoneModel', backref='tel_person', lazy='dynamic')
-    hospitals = db.relationship('HospitalModel', backref='hospital_person', uselist=False)
-    psychologists = db.relationship('PsychologistModel', backref='person_psy', uselist=False)
+    telephones = db.relationship('TelephoneModel', backref='tel_person', lazy='dynamic', cascade='all, delete-orphan')
+    hospitals = db.relationship('HospitalModel', backref='hospital_person', uselist=False, cascade='all, delete-orphan')
+    psychologists = db.relationship('PsychologistModel', backref='person_psy', uselist=False, cascade='all, delete-orphan')
 
     def __init__(self, name, email):
         self.name = name

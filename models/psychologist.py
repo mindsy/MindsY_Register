@@ -9,7 +9,7 @@ class PsychologistModel(db.Model):
     date_of_birth = db.Column(db.String)
     
     person_psy_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
-    hospital_psychologists = db.relationship('PsychologistHospitalModel', backref='crp_psychologist', lazy='dynamic')
+    hospital_psychologists = db.relationship('PsychologistHospitalModel', backref='crp_psychologist', lazy='dynamic', cascade='all, delete-orphan')
 
     def __init__(self, crp, password, date_of_birth, person_psy):
         self.crp = crp
