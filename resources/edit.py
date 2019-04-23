@@ -81,4 +81,4 @@ class Edit(Resource):
 
         person.save_to_db()
 
-        return person.json()
+        return {'message': 'Successfully'}, 200
