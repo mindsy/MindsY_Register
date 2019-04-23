@@ -10,5 +10,5 @@ class DeleteUser(Resource):
         person = PersonModel.find_by_id(id)
         if person:
             person.delete_from_db()
-            return {'message': 'Item deleted.'}
+            return {'message': 'User deleted.'}
         return {'message': 'Item not found.'}, 404
