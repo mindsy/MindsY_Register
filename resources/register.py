@@ -53,8 +53,8 @@ class Register(Resource):
                         type=str,
                         required=False
                         )
-
-    def create_user(self):
+        
+    def post(self):
         data = Register.parser.parse_args()
 
         if PersonModel.find_by_email(data['email']):
@@ -76,19 +76,19 @@ class Register(Resource):
         new_psychologist.save_to_db()
 
         if not HospitalModel.find_by_registry_number("4002"):
-            new_hospital_person = PersonModel("Hospital da Criança", "hospitalCrianca@gmail.com")
-            new_hospital = HospitalModel("4002", "HOSPITAL DA CRIANÇA LTDA", new_hospital_person)
+            new_hospital_person = PersonModel("Hospital da Crianca", "hospitalCrianca@gmail.com")
+            new_hospital = HospitalModel("4002", "HOSPITAL DA CRIANCA LTDA", new_hospital_person)
             new_psychologist_hospital = PsychologistHospitalModel(new_hospital, new_psychologist)
+
             new_psychologist_hospital.save_to_db()
             new_hospital_person.save_to_db()
             new_hospital.save_to_db()
 
         else:
+            
             new_psychologist_hospital = PsychologistHospitalModel(HospitalModel.find_by_registry_number("4002"), new_psychologist)
             new_psychologist_hospital.save_to_db()
 
-    def post(self):
-        self.create_user()
         return {"message": "User created successfully."}, 201
 
 class Edit(Resource):
@@ -133,6 +133,10 @@ class Edit(Resource):
                         type=str,
                         required=False
                         )
+    parser.add_argument('crp',
+                        type=str,
+                        required=False
+                        )
     def put(self, id):
         data = Edit.parser.parse_args()
 
@@ -155,12 +159,15 @@ class Edit(Resource):
                 person.hospitals.registry_number = data['registry_number']
             if data['social_reason']:
                 person.hospitals.social_reason = data['social_reason']
+            if data['crp']:
+                return {'message': 'You cannot change the crp'}
+
         else:
             return {'message': 'User not found.'}, 404
 
         person.save_to_db()
 
-        return {"message": "Ok"}, 200
+        return person.json()
 
 # {"name": "tactel", 
 # "email": "tactelzeras@gmail.com",
