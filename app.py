@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api
-from resources.register import Register, Edit
+from resources.register import Register
+from resources.edit import Edit
 
 
 app = Flask(__name__)
