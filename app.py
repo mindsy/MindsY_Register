@@ -3,7 +3,7 @@ from flask_restful import Api
 from resources.register import Register
 from resources.edit import Edit
 from resources.delete import DeleteUser
-from resources.user_information import ShowInformationUser
+from resources.user_information import ShowInformationUserID, ShowInformationUserEmail
 
 
 app = Flask(__name__)
@@ -22,7 +22,8 @@ def create_tables():
 api.add_resource(Register, '/register')
 api.add_resource(Edit, '/edit/<int:id>')
 api.add_resource(DeleteUser, '/delete/<int:id>')
-api.add_resource(ShowInformationUser, '/user_information/<int:id>')
+api.add_resource(ShowInformationUserID, '/user_information/<int:id>')
+api.add_resource(ShowInformationUserEmail, '/user_information/<string:email>')
 
 
 if __name__ == '__main__':
