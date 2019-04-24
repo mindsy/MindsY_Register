@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse, request
+from flask_jwt_extended import jwt_required
 from models.person import PersonModel
 from models.telephone import TelephoneModel
 from models.psychologist import PsychologistModel
@@ -50,7 +51,9 @@ class Edit(Resource):
     parser.add_argument('crp',
                         type=str,
                         required=False
-                        )
+                       )
+
+    @jwt_required
     def put(self, id):
         data = Edit.parser.parse_args()
 
@@ -81,4 +84,4 @@ class Edit(Resource):
 
         person.save_to_db()
 
-        return {'message': 'Successfully'}, 200
+        return person.json()

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from flask_restful import Resource, reqparse, request
+from flask_jwt_extended import create_access_token, create_refresh_token
+from werkzeug.security import safe_str_cmp
 from models.person import PersonModel
 from models.telephone import TelephoneModel
 from models.psychologist import PsychologistModel
 from models.hospital import HospitalModel
 from models.psychologist_hospital import PsychologistHospitalModel
+
 
 class Register(Resource):
 
@@ -90,6 +93,29 @@ class Register(Resource):
             new_psychologist_hospital.save_to_db()
 
         return {"message": "User created successfully."}, 201
+
+class UserLogin(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('crp',
+                        type=str,
+                        required=True,
+                        help="This field cannot be blank."
+                        )
+    parser.add_argument('password',
+                        type=str,
+                        required=True,
+                        help="This field cannot be blank."
+                        )
+    @classmethod
+    def post(self):
+        data = UserLogin.parser.parse_args()
+        psychologist = PsychologistModel.find_by_crp(data['crp'])
+        if psychologist and safe_str_cmp(psychologist.password, data['password']):
+            access_token = create_access_token(identity=psychologist.person_psy.id, fresh=True)
+            refresh_token = create_refresh_token(psychologist.person_psy.id)
+            return {'access token': access_token, 'refresh_token': refresh_token}, 200
+
+        return {'message': 'Invalid Credentials'}, 401
 
 # {"name": "tactel", 
 # "email": "tactelzeras@gmail.com",
