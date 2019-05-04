@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 from resources.register import Register, UserLogin, TokenRefresh, UserLogout
 from resources.edit import Edit
@@ -9,6 +10,8 @@ from resources.user_information import ShowInformationUserID, ShowInformationUse
 from blacklist import BLACKLIST
 
 app = Flask(__name__)
+CORS(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
