@@ -39,7 +39,7 @@ Orientações para contribuir com a MindsY podem ser encontradas <a href="https:
     docker-compose up --build
   ```
   
-Para verficiar o funcionamento acesse <a href="http://localhost:4000">http://localhost:4000</a>
+Para verficiar o funcionamento acesse <a href="http://localhost:4000">http://localhost:3000</a>
   
 ### Licença
 
