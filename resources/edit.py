@@ -54,34 +54,34 @@ class Edit(Resource):
                        )
 
     @jwt_required
-    def put(self, id):
+    def put(self, crp):
         data = Edit.parser.parse_args()
 
-        person = PersonModel.find_by_id(id)
+        psychologist = PsychologistModel.find_by_crp(crp)
 
-        if person:
+        if psychologist:
             if data['name']:
-                person.name = data['name']
+                psychologist.person_psy.name = data['name']
             if data['email']:
-                person.email = data['email']
+                psychologist.person_psy.email = data['email']
             if data['number']:
-                person.telephones[0].number = data['number']
+                psychologist.person_psy.telephones[0].number = data['number']
             if data['telephone_type']:
-                person.telephones[0].telephone_type = data['telephone_type']
+                psychologist.person_psy.telephones[0].telephone_type = data['telephone_type']
             if data['date_of_birth']:
-                person.psychologists.date_of_birth = data['date_of_birth']
+                psychologist.date_of_birth = data['date_of_birth']
             if data['password']:
-                person.psychologists.password = data['password']
+                psychologist.password = data['password']
             if data['registry_number']:
-                person.hospitals.registry_number = data['registry_number']
+                psychologist.hospital_psychologists[0].hospital.registry_number = data['registry_number']
             if data['social_reason']:
-                person.hospitals.social_reason = data['social_reason']
+                psychologist.hospital_psychologists[0].hospital.social_reason = data['social_reason']
             if data['crp']:
                 return {'message': 'You cannot change the crp'}
 
         else:
             return {'message': 'User not found.'}, 404
 
-        person.save_to_db()
+        psychologist.save_to_db()
 
-        return person.json()
+        return {'message': 'User updated'}, 200

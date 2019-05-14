@@ -6,7 +6,7 @@ from flask_cors import CORS
 from resources.register import Register, UserLogin, TokenRefresh, UserLogout
 from resources.edit import Edit
 from resources.delete import DeleteUser
-from resources.user_information import ShowInformationUserID, ShowInformationUserEmail
+from resources.user_information import ShowInformationUserID
 from blacklist import BLACKLIST
 
 app = Flask(__name__)
@@ -70,10 +70,9 @@ def revoked_token_callback():
     }), 401
 
 api.add_resource(Register, '/register')
-api.add_resource(Edit, '/edit/<int:id>')
+api.add_resource(Edit, '/edit/<string:crp>')
 api.add_resource(DeleteUser, '/delete/<int:id>')
-api.add_resource(ShowInformationUserID, '/user_information/<int:id>')
-api.add_resource(ShowInformationUserEmail, '/user_information/<string:email>')
+api.add_resource(ShowInformationUserID, '/user_information/<string:crp>')
 api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')
 api.add_resource(TokenRefresh, '/refresh')
