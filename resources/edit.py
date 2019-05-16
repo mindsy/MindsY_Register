@@ -6,6 +6,8 @@ from models.psychologist import PsychologistModel
 from models.hospital import HospitalModel
 from models.psychologist_hospital import PsychologistHospitalModel
 
+from datetime import datetime
+
 class Edit(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('name',
@@ -35,9 +37,7 @@ class Edit(Resource):
                         help="This field cannot be blank."
                         )
     parser.add_argument('date_of_birth',
-                        type=str,
-                        required=False,
-                        help="This field cannot be blank."
+                        type=lambda d: datetime.strptime(d, '%d-%m-%Y')
                         )
 
     parser.add_argument('registry_number',

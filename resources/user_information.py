@@ -12,9 +12,10 @@ class ShowInformationUserID(Resource):
             person_info = psychologists.person_psy.json()
             psychologists_info = psychologists.json()
             hospital_info = psychologists.hospital_psychologists[0].hospital.json()
+            psy_hosp_info = psychologists.hospital_psychologists[0].id_psycho_hosp
 
-            output = {'Basic Informations': [person_info], 'Psychologist Information': [psychologists_info],
-            'Hospital': hospital_info}
+            output = {'Basic Informations': [person_info], 'Psychologist Information': [psychologists_info] , 'id_psychogist_hospital': psy_hosp_info,
+            'Hospital': [hospital_info]}
 
             return {'User Information': output}
         return {'message': 'User not found.'}, 404
