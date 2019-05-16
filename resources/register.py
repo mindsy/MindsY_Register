@@ -82,7 +82,7 @@ class Register(Resource):
         new_telephone = TelephoneModel(data['number'], data['telephone_type'], new_person)
         new_telephone.save_to_db()
 
-        new_psychologist = PsychologistModel(data['crp'], data['password'],data['date_of_birth'], new_person)
+        new_psychologist = PsychologistModel(data['crp'], data['password'],data['date_of_birth'], data['person_psy_id'])
         new_psychologist.save_to_db()
 
         if not HospitalModel.find_by_registry_number("4002"):

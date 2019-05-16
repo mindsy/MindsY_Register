@@ -10,10 +10,10 @@ class HospitalModel(db.Model):
     hospital_person_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
     hospital_psychologists = db.relationship('PsychologistHospitalModel', backref='hospital', lazy='dynamic', cascade='all, delete-orphan')
 
-    def __init__(self, registry_number, social_reason, hospital_person):
+    def __init__(self, registry_number, social_reason, hospital_person_id):
         self.registry_number = registry_number
         self.social_reason = social_reason
-        self.hospital_person = hospital_person
+        self.hospital_person_id = hospital_person_id
     
     def json(self):
          return {'registry_number': self.registry_number, 'social_reason': self.social_reason}

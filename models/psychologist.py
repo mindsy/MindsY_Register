@@ -11,10 +11,10 @@ class PsychologistModel(db.Model):
     person_psy_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
     hospital_psychologists = db.relationship('PsychologistHospitalModel', backref='crp_psychologist', lazy='dynamic', cascade='all, delete-orphan')
 
-    def __init__(self, crp, password, date_of_birth, person_psy):
+    def __init__(self, crp, password, date_of_birth, person_psy_id):
         self.crp = crp
         self.password = password
-        self.person_psy = person_psy
+        self.person_psy_id = person_psy_id
         self.date_of_birth = date_of_birth
 
     def json(self):
