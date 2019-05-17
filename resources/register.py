@@ -8,12 +8,15 @@ from flask_jwt_extended import (
     get_raw_jwt,
     get_jwt_identity
 )
+
+from datetime import datetime
 from werkzeug.security import safe_str_cmp
 from models.person import PersonModel
 from models.telephone import TelephoneModel
 from models.psychologist import PsychologistModel
 from models.hospital import HospitalModel
 from models.psychologist_hospital import PsychologistHospitalModel
+
 from blacklist import BLACKLIST
 
 
@@ -51,9 +54,7 @@ class RegisterPsychologist(Resource):
                         help="This field cannot be blank."
                         )
     parser.add_argument('date_of_birth',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
+                        type=lambda d: datetime.strptime(d, '%d-%m-%Y')
                         )
 
     parser.add_argument('registry_number',
@@ -66,7 +67,7 @@ class RegisterPsychologist(Resource):
                         )
 
     def post(self):
-        data = Register.parser.parse_args()
+        data = RegisterPsychologist.parser.parse_args()
 
         if PersonModel.find_by_email(data['email']):
             return {"message": "A user with that email already exists"}, 400
@@ -80,24 +81,24 @@ class RegisterPsychologist(Resource):
         new_person = PersonModel(data['name'], data['email'])
         new_person.save_to_db()
 
-        new_telephone = TelephoneModel(data['number'], data['telephone_type'], new_person)
+        new_telephone = TelephoneModel(data['number'], data['telephone_type'], new_person.id)
         new_telephone.save_to_db()
 
-        new_psychologist = PsychologistModel(data['crp'], data['password'],data['date_of_birth'], data['person_psy_id'])
+        new_psychologist = PsychologistModel(data['crp'], data['password'],data['date_of_birth'], new_person.id)
         new_psychologist.save_to_db()
 
         if not HospitalModel.find_by_registry_number("4002"):
             new_hospital_person = PersonModel("Hospital da Crianca", "hospitalCrianca@gmail.com")
-            new_hospital = HospitalModel("4002", "HOSPITAL DA CRIANCA LTDA", new_hospital_person)
-            new_psychologist_hospital = PsychologistHospitalModel(new_hospital, new_psychologist)
+            new_hospital = HospitalModel("4002", "HOSPITAL DA CRIANCA LTDA", new_hospital_person.id)
+            new_psychologist_hospital = PsychologistHospitalModel(new_hospital.registry_number, new_psychologist.crp)
 
             new_psychologist_hospital.save_to_db()
             new_hospital_person.save_to_db()
             new_hospital.save_to_db()
 
         else:
-
-            new_psychologist_hospital = PsychologistHospitalModel(HospitalModel.find_by_registry_number("4002"), new_psychologist)
+            hosp = HospitalModel.find_by_registry_number("4002")
+            new_psychologist_hospital = PsychologistHospitalModel(hosp.registry_number, new_psychologist.crp)
             new_psychologist_hospital.save_to_db()
 
         return {"message": "User created successfully."}, 201
@@ -121,9 +122,10 @@ class UserLogin(Resource):
         if psychologist and safe_str_cmp(psychologist.password, data['password']):
             access_token = create_access_token(identity=psychologist.person_psy.id, fresh=True)
             refresh_token = create_refresh_token(psychologist.person_psy.id)
-            return {'access token': access_token, 'refresh_token': refresh_token}, 200
+            return {'access_token': access_token, 'refresh_token': refresh_token}, 200
 
         return {'message': 'Invalid Credentials'}, 401
+
 
 class UserLogout(Resource):
     @jwt_required
@@ -132,18 +134,10 @@ class UserLogout(Resource):
         BLACKLIST.add(jti)
         return {'message': 'Successfully logged out'}, 200
 
+
 class TokenRefresh(Resource):
     @jwt_refresh_token_required
     def post(self):
         current_user = get_jwt_identity()
         new_token = create_access_token(identity=current_user, fresh=False)
         return {'access_token': new_token}, 200
-
-# {"name": "tactel", 
-# "email": "tactelzeras@gmail.com",
-# "number": "111111",
-# "telephone_type": "residencial",
-# "password": "mudeiasenha",
-# "date_of_birth": "12/09/1999",
-# "crp": "123456"
-# }

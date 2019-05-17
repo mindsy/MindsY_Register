@@ -12,6 +12,7 @@ class ShowPsychologistInformationID(Resource):
             person_info = psychologists.person_psy.json()
             psychologists_info = psychologists.json()
             hospital_info = psychologists.hospital_psychologists[0].hospital.json()
+            psy_hosp_info = psychologists.hospital_psychologists[0].id_psycho_hosp
 
             output = {'Basic Informations': [person_info],
                       'Psychologist Information': [psychologists_info],

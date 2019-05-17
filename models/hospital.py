@@ -4,8 +4,8 @@ from db import db
 class HospitalModel(db.Model):
     __tablename__ = 'hospital'
 
-    registry_number = db.Column(db.String, primary_key=True, autoincrement=False)
-    social_reason = db.Column(db.String)
+    registry_number = db.Column(db.String(12), primary_key=True, autoincrement=False)
+    social_reason = db.Column(db.String(150))
 
     hospital_person_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
     hospital_psychologists = db.relationship('PsychologistHospitalModel', backref='hospital', lazy='dynamic', cascade='all, delete-orphan')

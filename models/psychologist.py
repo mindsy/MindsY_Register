@@ -5,7 +5,7 @@ class PsychologistModel(db.Model):
 
     crp = db.Column(db.String, primary_key=True, autoincrement=False)
     password = db.Column(db.String)
-    date_of_birth = db.Column(db.String)
+    date_of_birth = db.Column(db.DateTime)
     
     person_psy_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
     hospital_psychologists = db.relationship('PsychologistHospitalModel', backref='crp_psychologist', lazy='dynamic', cascade='all, delete-orphan')
@@ -17,6 +17,7 @@ class PsychologistModel(db.Model):
         self.date_of_birth = date_of_birth
 
     def json(self):
+
         return {'crp': self.crp, 'date_of_birth': self.date_of_birth, 'password': self.password}
 
     @classmethod
