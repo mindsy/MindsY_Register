@@ -4,7 +4,7 @@ from models.psychologist import PsychologistModel
 from models.person import PersonModel
 
 
-class ShowInformationUserID(Resource):
+class ShowPsychologistInformationID(Resource):
     @jwt_required
     def get(self, crp):
         psychologists = PsychologistModel.find_by_crp(crp)
@@ -13,8 +13,9 @@ class ShowInformationUserID(Resource):
             psychologists_info = psychologists.json()
             hospital_info = psychologists.hospital_psychologists[0].hospital.json()
 
-            output = {'Basic Informations': [person_info], 'Psychologist Information': [psychologists_info],
-            'Hospital': hospital_info}
+            output = {'Basic Informations': [person_info],
+                      'Psychologist Information': [psychologists_info],
+                      'Hospital': [hospital_info]}
 
             return {'User Information': output}
         return {'message': 'User not found.'}, 404

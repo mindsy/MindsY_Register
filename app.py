@@ -3,10 +3,10 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
-from resources.register import Register, UserLogin, TokenRefresh, UserLogout
-from resources.edit import Edit
+from resources.register import RegisterPsychologist, UserLogin, TokenRefresh, UserLogout
+from resources.edit import EditPsychologist
 from resources.delete import DeleteUser
-from resources.user_information import ShowInformationUserID
+from resources.user_information import ShowPsychologistInformationID
 from blacklist import BLACKLIST
 
 app = Flask(__name__)
@@ -69,10 +69,11 @@ def revoked_token_callback():
         'error': 'token revoked'
     }), 401
 
-api.add_resource(Register, '/register')
-api.add_resource(Edit, '/edit/<string:crp>')
-api.add_resource(DeleteUser, '/delete/<int:id>')
-api.add_resource(ShowInformationUserID, '/user_information/<string:crp>')
+
+api.add_resource(RegisterPsychologist, '/register-psychologist')
+api.add_resource(EditPsychologist, '/edit-psychologist/<string:crp>')
+api.add_resource(DeleteUser, '/delete-user/<int:id>')
+api.add_resource(ShowPsychologistInformationID, '/psychologist_information/<string:crp>')
 api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')
 api.add_resource(TokenRefresh, '/refresh')

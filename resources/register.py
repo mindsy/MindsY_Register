@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from flask_restful import Resource, reqparse, request
 from flask_jwt_extended import (
-    create_access_token, 
-    create_refresh_token, 
+    create_access_token,
+    create_refresh_token,
     jwt_refresh_token_required,
     jwt_required,
     get_raw_jwt,
@@ -16,7 +16,8 @@ from models.hospital import HospitalModel
 from models.psychologist_hospital import PsychologistHospitalModel
 from blacklist import BLACKLIST
 
-class Register(Resource):
+
+class RegisterPsychologist(Resource):
 
     parser = reqparse.RequestParser()
     parser.add_argument('name',
@@ -63,19 +64,19 @@ class Register(Resource):
                         type=str,
                         required=False
                         )
-        
+
     def post(self):
         data = Register.parser.parse_args()
 
         if PersonModel.find_by_email(data['email']):
             return {"message": "A user with that email already exists"}, 400
-        
+
         if PsychologistModel.find_by_crp(data['crp']):
             return {"message": "A user with that crp already exists"}, 400
 
         if TelephoneModel.find_by_number(data['number']):
             return {"message": "A user with that number already exists"}, 400
-        
+
         new_person = PersonModel(data['name'], data['email'])
         new_person.save_to_db()
 
@@ -95,7 +96,7 @@ class Register(Resource):
             new_hospital.save_to_db()
 
         else:
-            
+
             new_psychologist_hospital = PsychologistHospitalModel(HospitalModel.find_by_registry_number("4002"), new_psychologist)
             new_psychologist_hospital.save_to_db()
 

@@ -6,7 +6,7 @@ from models.psychologist import PsychologistModel
 from models.hospital import HospitalModel
 from models.psychologist_hospital import PsychologistHospitalModel
 
-class Edit(Resource):
+class EditPsychologist(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('name',
                         type=str,

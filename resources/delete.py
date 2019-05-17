@@ -6,6 +6,7 @@ from models.psychologist import PsychologistModel
 from models.hospital import HospitalModel
 from models.psychologist_hospital import PsychologistHospitalModel
 
+
 class DeleteUser(Resource):
     @fresh_jwt_required
     def delete(self, id):

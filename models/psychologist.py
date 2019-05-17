@@ -1,6 +1,5 @@
 from db import db
 
-
 class PsychologistModel(db.Model):
     __tablename__ = 'psychologist'
 
@@ -18,7 +17,7 @@ class PsychologistModel(db.Model):
         self.date_of_birth = date_of_birth
 
     def json(self):
-        return {'crp': self.crp, 'date_of_birth':self.date_of_birth, 'password': self.password}
+        return {'crp': self.crp, 'date_of_birth': self.date_of_birth, 'password': self.password}
 
     @classmethod
     def find_by_crp(cls, crp):
