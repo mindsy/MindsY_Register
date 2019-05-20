@@ -6,7 +6,7 @@ class PsychologistHospitalModel(db.Model):
 
     id_psycho_hosp = db.Column(db.Integer, primary_key=True)
     crp_psychologist_crp = db.Column(db.String, db.ForeignKey('psychologist.crp'))
-    hospital_registry_number = db.Column(db.Integer, db.ForeignKey('hospital.registry_number'))
+    hospital_registry_number = db.Column(db.String, db.ForeignKey('hospital.registry_number'))
 
     pat_pyscho_hosps = db.relationship('Pat_Psycho_HospModel', backref= 'pat_psycho_hosp', lazy='dynamic',
                                        cascade='all, delete-orphan')

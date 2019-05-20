@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
@@ -11,12 +13,15 @@ from datetime import timedelta
 from blacklist import BLACKLIST
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+load_dotenv(".env")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI")
+#'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config['JWT_BLACKLIST_ENABLED'] = True
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
-app.secret_key = 'mindsy-cadastro-microservice'
+app.secret_key = os.environ.get("APP_SECRET_KEY")
 app.config['JWT_SECRET_KEY'] = 'mindsy-microservice-register'
 # config JWT to expire within half an hour
 app.config['JWT_EXPIRATION_DELTA'] = timedelta(seconds=3600)
@@ -81,7 +86,7 @@ def revoked_token_callback():
 api.add_resource(RegisterPsychologist, '/register-psychologist')
 api.add_resource(EditPsychologist, '/edit-psychologist/<string:crp>')
 api.add_resource(DeleteUser, '/delete-user/<int:id>')
-api.add_resource(ShowPsychologistInformationID, '/psychologist_information/<string:crp>')
+api.add_resource(ShowPsychologistInformationID, '/psychologist-information/<string:crp>')
 api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')
 api.add_resource(TokenRefresh, '/refresh')

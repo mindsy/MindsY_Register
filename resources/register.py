@@ -16,6 +16,10 @@ from models.telephone import TelephoneModel
 from models.psychologist import PsychologistModel
 from models.hospital import HospitalModel
 from models.psychologist_hospital import PsychologistHospitalModel
+from models.patient import PatientModel
+from models.pat_psycho_hosp import Pat_Psycho_HospModel
+from models.accountable import AccountableModel
+
 
 from blacklist import BLACKLIST
 
@@ -34,7 +38,7 @@ class RegisterPsychologist(Resource):
                         help="This field cannot be blank."
                         )
     parser.add_argument('number',
-                        type=int,
+                        type=str,
                         required=True,
                         help="This field cannot be blank."
                         )
@@ -89,12 +93,13 @@ class RegisterPsychologist(Resource):
 
         if not HospitalModel.find_by_registry_number("4002"):
             new_hospital_person = PersonModel("Hospital da Crianca", "hospitalCrianca@gmail.com")
-            new_hospital = HospitalModel("4002", "HOSPITAL DA CRIANCA LTDA", new_hospital_person.id)
-            new_psychologist_hospital = PsychologistHospitalModel(new_hospital.registry_number, new_psychologist.crp)
-
-            new_psychologist_hospital.save_to_db()
             new_hospital_person.save_to_db()
+
+            new_hospital = HospitalModel("4002", "HOSPITAL DA CRIANCA LTDA", new_hospital_person.id)
             new_hospital.save_to_db()
+
+            new_psychologist_hospital = PsychologistHospitalModel(new_hospital.registry_number, new_psychologist.crp)
+            new_psychologist_hospital.save_to_db()
 
         else:
             hosp = HospitalModel.find_by_registry_number("4002")
