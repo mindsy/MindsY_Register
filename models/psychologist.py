@@ -18,7 +18,7 @@ class PsychologistModel(db.Model):
 
     def json(self):
 
-        return {'crp': self.crp, 'date_of_birth': self.date_of_birth, 'password': self.password}
+        return {'crp': self.crp, 'date_of_birth': self.date_of_birth.date().isoformat(), 'password': self.password}
 
     @classmethod
     def find_by_crp(cls, crp):

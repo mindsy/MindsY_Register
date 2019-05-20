@@ -54,7 +54,6 @@ class EditPsychologist(Resource):
                         required=False
                        )
 
-    @jwt_required
     def put(self, crp):
         data = EditPsychologist.parser.parse_args()
 

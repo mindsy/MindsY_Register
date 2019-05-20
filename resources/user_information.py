@@ -5,7 +5,6 @@ from models.person import PersonModel
 
 
 class ShowPsychologistInformationID(Resource):
-    @jwt_required
     def get(self, crp):
         psychologists = PsychologistModel.find_by_crp(crp)
         if psychologists:
