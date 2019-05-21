@@ -1,7 +1,7 @@
 flask
 flask-jwt-extended
-flask-jwt
 flask-sqlalchemy
 flask-restful
 python-dotenv
-psycopg2l
+psycopg2==2.8.2
+passlib

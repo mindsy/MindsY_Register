@@ -8,7 +8,7 @@ from flask_jwt_extended import (
     get_raw_jwt,
     get_jwt_identity
 )
-
+from security import encrypt_password, check_encrypted_password
 from datetime import datetime
 from werkzeug.security import safe_str_cmp
 from models.person import PersonModel
@@ -87,8 +87,10 @@ class RegisterPsychologist(Resource):
 
         new_telephone = TelephoneModel(data['number'], data['telephone_type'], new_person.id)
         new_telephone.save_to_db()
+        
+        password_crip = encrypt_password(data['password'])
 
-        new_psychologist = PsychologistModel(data['crp'], data['password'],data['date_of_birth'], new_person.id)
+        new_psychologist = PsychologistModel(data['crp'], password_crip, data['date_of_birth'], new_person.id)
         new_psychologist.save_to_db()
 
         if not HospitalModel.find_by_registry_number("4002"):
@@ -124,7 +126,9 @@ class UserLogin(Resource):
     def post(self):
         data = UserLogin.parser.parse_args()
         psychologist = PsychologistModel.find_by_crp(data['crp'])
-        if psychologist and safe_str_cmp(psychologist.password, data['password']):
+        decripted_password = check_encrypted_password(data['password'], psychologist.password)
+
+        if psychologist and decripted_password:
             access_token = create_access_token(identity=psychologist.person_psy.id, fresh=True)
             refresh_token = create_refresh_token(psychologist.person_psy.id)
             return {'access_token': access_token, 'refresh_token': refresh_token}, 200
