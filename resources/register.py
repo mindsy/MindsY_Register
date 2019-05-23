@@ -8,9 +8,8 @@ from flask_jwt_extended import (
     get_raw_jwt,
     get_jwt_identity
 )
-from security import encrypt_password, check_encrypted_password
+from security import encrypt_password
 from datetime import datetime
-from werkzeug.security import safe_str_cmp
 from models.person import PersonModel
 from models.telephone import TelephoneModel
 from models.psychologist import PsychologistModel
@@ -19,10 +18,6 @@ from models.psychologist_hospital import PsychologistHospitalModel
 from models.patient import PatientModel
 from models.pat_psycho_hosp import Pat_Psycho_HospModel
 from models.accountable import AccountableModel
-
-
-from blacklist import BLACKLIST
-
 
 class RegisterPsychologist(Resource):
 
