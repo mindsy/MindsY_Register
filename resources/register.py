@@ -51,7 +51,8 @@ class RegisterPsychologist(Resource):
                         required=False
                         )
 
-    def post(self):
+    @staticmethod
+    def post():
         data = RegisterPsychologist.parser.parse_args()
 
         if PersonModel.find_by_email(data['email']):

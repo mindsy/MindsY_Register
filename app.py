@@ -26,7 +26,7 @@ def create_tables():
 
 api.add_resource(RegisterPsychologist, '/psychologist')
 api.add_resource(EditPsychologist, '/psychologist/<string:crp>')
-api.add_resource(DeleteUser, '/psychologist/<int:id>')
+api.add_resource(DeleteUser, '/psychologist/<string:crp>')
 api.add_resource(ShowPsychologistInformationCRP, '/psychologist/<string:crp>')
 
 if __name__ == '__main__':

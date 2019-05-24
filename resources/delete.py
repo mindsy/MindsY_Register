@@ -1,14 +1,12 @@
 from flask_restful import Resource
-from flask_jwt_extended import fresh_jwt_required
-from models.person import PersonModel
+from models.psychologist import PsychologistModel
 
 
 class DeleteUser(Resource):
     @classmethod
-    @fresh_jwt_required
-    def delete(cls, id):
-        person = PersonModel.find_by_id(id)
-        if person:
-            person.delete_from_db()
+    def delete(cls, crp):
+        psychologist = PsychologistModel.find_by_crp(crp)
+        if psychologist:
+            psychologist.delete_from_db()
             return {'message': 'User deleted.'}
         return {'message': 'User not found.'}, 404

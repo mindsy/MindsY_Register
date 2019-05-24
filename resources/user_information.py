@@ -3,7 +3,8 @@ from models.psychologist import PsychologistModel
 
 
 class ShowPsychologistInformationCRP(Resource):
-    def get(self, crp):
+    @staticmethod
+    def get(crp):
         psychologists = PsychologistModel.find_by_crp(crp)
         if psychologists:
             person_info = psychologists.PERSON.json()
