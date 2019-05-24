@@ -9,7 +9,7 @@ class PersonModel(db.Model):
     email = db.Column('email', db.String, nullable=False)
 
     telephones = db.relationship('TelephoneModel', backref='PERSON', lazy='dynamic', cascade='all, delete-orphan')
-    hospitals = db.relationship('HospitalModel', backref='PERSON', uselist=False, cascade='all, delete-orphan')
+    hospitals = db.relationship('HospitalModel', backref='PERSON', uselist=False)
     psychologists = db.relationship('PsychologistModel', backref='PERSON', uselist=False, cascade='all, delete-orphan')
     accountables = db.relationship('AccountableModel', backref='PERSON', uselist=False, cascade='all, delete-orphan')
     patients = db.relationship('PatientModel', backref='PERSON', uselist=False, cascade='all, delete-orphan')
