@@ -16,7 +16,7 @@ class EditPsychologist(Resource):
                         help="This field cannot be blank."
                         )
     parser.add_argument('number',
-                        type=int,
+                        type=str,
                         required=False,
                         help="This field cannot be blank."
                         )
@@ -50,26 +50,26 @@ class EditPsychologist(Resource):
 
     def put(self, crp):
         data = EditPsychologist.parser.parse_args()
-
         psychologist = PsychologistModel.find_by_crp(crp)
 
         if psychologist:
             if data['name']:
-                psychologist.person_psy.name = data['name']
+                psychologist.PERSON.name = data['name']
             if data['email']:
-                psychologist.person_psy.email = data['email']
+                psychologist.PERSON.email = data['email']
             if data['number']:
-                psychologist.person_psy.telephones[0].number = data['number']
+                psychologist.PERSON.telephones[0].number = data['number']
             if data['telephone_type']:
-                psychologist.person_psy.telephones[0].telephone_type = data['telephone_type']
+                psychologist.PERSON.telephones[0].telephone_type = data['telephone_type']
             if data['date_of_birth']:
                 psychologist.date_of_birth = data['date_of_birth']
             if data['password']:
                 psychologist.password = data['password']
-            if data['registry_number']:
-                psychologist.hospital_psychologists[0].hospital.registry_number = data['registry_number']
-            if data['social_reason']:
-                psychologist.hospital_psychologists[0].hospital.social_reason = data['social_reason']
+            # if data['registry_number']:
+            #     psychologist.hospital_psychologists[0].hospital.registry_number = data['registry_number']
+            # if data['social_reason']:
+            #     psychologist.hospital_psychologists[0].hospital.social_reason = data['social_reason']
+
             if data['crp']:
                 return {'message': 'You cannot change the crp'}
 

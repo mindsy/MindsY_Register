@@ -1,5 +1,5 @@
-import os
-from dotenv import load_dotenv
+# import os
+# from dotenv import load_dotenv
 from flask import Flask
 from flask_restful import Api
 
@@ -9,13 +9,13 @@ from resources.delete import DeleteUser
 from resources.user_information import ShowPsychologistInformationID
 
 app = Flask(__name__)
-load_dotenv(".env")
+# load_dotenv(".env")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://mindsy:12345678@localhost:3306/MINDSY'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:admin@localhost:3306/MINDSY'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['PROPAGATE_EXCEPTIONS'] = True
-app.secret_key = os.environ.get("APP_SECRET_KEY")
+app.secret_key = 'mindsy'
 api = Api(app)
 
 
