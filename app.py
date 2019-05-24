@@ -6,7 +6,7 @@ from flask_restful import Api
 from resources.register import RegisterPsychologist
 from resources.edit import EditPsychologist
 from resources.delete import DeleteUser
-from resources.user_information import ShowPsychologistInformationID
+from resources.user_information import ShowPsychologistInformationCRP
 
 app = Flask(__name__)
 # load_dotenv(".env")
@@ -27,7 +27,7 @@ def create_tables():
 api.add_resource(RegisterPsychologist, '/psychologist')
 api.add_resource(EditPsychologist, '/psychologist/<string:crp>')
 api.add_resource(DeleteUser, '/psychologist/<int:id>')
-api.add_resource(ShowPsychologistInformationID, '/psychologist/<string:crp>')
+api.add_resource(ShowPsychologistInformationCRP, '/psychologist/<string:crp>')
 
 if __name__ == '__main__':
     from db import db

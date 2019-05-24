@@ -71,9 +71,6 @@ class RegisterPsychologist(Resource):
         
         password_crip = encrypt_password(data['password'])
 
-        crp = data['crp']
-
-
         new_psychologist = PsychologistModel(data['crp'], password_crip, data['date_of_birth'], new_person.id)
         new_psychologist.save_to_db()
 

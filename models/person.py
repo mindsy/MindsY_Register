@@ -14,15 +14,14 @@ class PersonModel(db.Model):
     accountables = db.relationship('AccountableModel', backref='PERSON', uselist=False, cascade='all, delete-orphan')
     patients = db.relationship('PatientModel', backref='PERSON', uselist=False, cascade='all, delete-orphan')
 
-
     def __init__(self, name, email):
         self.name = name
         self.email = email
 
     def json(self):
-        return {'id_person': self.id, 'name': self.name, 'email': self.email, 'telephone': [telephone.json() for telephone
-                                                                                     in self.telephones.all()]}
-
+        return {'id_person': self.id, 'name': self.name, 'email': self.email, 'telephone': [telephone.json()
+                                                                                            for telephone
+                                                                                            in self.telephones.all()]}
 
     @classmethod
     def find_by_email(cls, email):

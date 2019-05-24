@@ -3,9 +3,10 @@ import enum
 
 
 class TelephoneTypeEnum(enum.Enum):
-    COMMERCIAL = "comercial"
-    RESIDENTIAL = "residencial"
-    PERSONAL = "pessoal"
+    comercial = "comercial"
+    residencial = "residencial"
+    pessoal = "pessoal"
+
 
 class TelephoneModel(db.Model):
     __tablename__ = 'TELEPHONE'
@@ -21,7 +22,7 @@ class TelephoneModel(db.Model):
         self.tel_person_id = tel_person_id
 
     def json(self):
-        return {'number': self.number, 'telephone_type': self.telephone_type}
+        return {'number': self.number, 'telephone_type': self.telephone_type.value}
 
     @classmethod
     def find_by_number(cls, number):
