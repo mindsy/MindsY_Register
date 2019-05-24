@@ -17,7 +17,7 @@ from models.psychologist import PsychologistModel
 from models.hospital import HospitalModel
 from models.psychologist_hospital import PsychologistHospitalModel
 from models.patient import PatientModel
-from models.pat_psycho_hosp import Pat_Psycho_HospModel
+from models.pat_psycho_hosp import PatPsychoHospModel
 from models.accountable import AccountableModel
 
 

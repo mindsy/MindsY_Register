@@ -8,7 +8,7 @@ class ShowPsychologistInformationID(Resource):
     def get(self, crp):
         psychologists = PsychologistModel.find_by_crp(crp)
         if psychologists:
-            person_info = psychologists.person_psy.json()
+            person_info = psychologists.person_psy_id.json()
             psychologists_info = psychologists.json()
             hospital_info = psychologists.hospital_psychologists[0].hospital.json()
             psy_hosp_info = psychologists.hospital_psychologists[0].id_psycho_hosp

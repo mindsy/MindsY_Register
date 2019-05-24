@@ -15,9 +15,9 @@ from blacklist import BLACKLIST
 app = Flask(__name__)
 load_dotenv(".env")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI")
-#'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://mindsy:12345678@localhost:3306/MINDSY'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config['JWT_BLACKLIST_ENABLED'] = True
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
@@ -83,10 +83,10 @@ def revoked_token_callback():
     }), 401
 
 
-api.add_resource(RegisterPsychologist, '/register-psychologist')
-api.add_resource(EditPsychologist, '/edit-psychologist/<string:crp>')
-api.add_resource(DeleteUser, '/delete-user/<int:id>')
-api.add_resource(ShowPsychologistInformationID, '/psychologist-information/<string:crp>')
+api.add_resource(RegisterPsychologist, '/psychologist')
+api.add_resource(EditPsychologist, '/psychologist/<string:crp>')
+api.add_resource(DeleteUser, '/psychologist/<int:id>')
+api.add_resource(ShowPsychologistInformationID, '/psychologist/<string:crp>')
 api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')
 api.add_resource(TokenRefresh, '/refresh')

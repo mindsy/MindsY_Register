@@ -1,13 +1,19 @@
 from db import db
+import enum
 
+
+class TelephoneTypeEnum(enum.Enum):
+    COMMERCIAL = "comercial"
+    RESIDENTIAL = "residencial"
+    PERSONAL = "pessoal"
 
 class TelephoneModel(db.Model):
-    __tablename__ = 'telephone'
+    __tablename__ = 'TELEPHONE'
 
-    number = db.Column(db.String(11), primary_key=True, autoincrement=False)
-    telephone_type = db.Column(db.String(15))
+    number = db.Column('number', db.String(15), primary_key=True)
+    telephone_type = db.Column('type', db.Enum(TelephoneTypeEnum), nullable=False)
 
-    tel_person_id = db.Column(db.Integer, db.ForeignKey('person.id'))
+    tel_person_id = db.Column('id_person', db.Integer, db.ForeignKey('PERSON.id_person'))
 
     def __init__(self, number, telephone_type, tel_person_id):
         self.number = number

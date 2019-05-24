@@ -2,13 +2,13 @@ from db import db
 
 
 class HospitalModel(db.Model):
-    __tablename__ = 'hospital'
+    __tablename__ = 'HOSPITAL'
 
-    registry_number = db.Column(db.String(12), primary_key=True, autoincrement=False)
-    social_reason = db.Column(db.String(150))
+    registry_number = db.Column('registry_number', db.String(14), primary_key=True)
+    social_reason = db.Column('social_reason', db.String(100), nullable=False)
 
-    hospital_person_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True, nullable=False)
-    hospital_psychologists = db.relationship('PsychologistHospitalModel', backref='hospital', lazy='dynamic', cascade='all, delete-orphan')
+    hospital_person_id = db.Column('fk_person', db.Integer, db.ForeignKey('PERSON.id_person'), unique=True, nullable=False)
+    hospital_psychologists = db.relationship('PsychologistHospitalModel', backref='HOSPITAL', lazy='dynamic', cascade='all, delete-orphan')
 
     def __init__(self, registry_number, social_reason, hospital_person_id):
         self.registry_number = registry_number

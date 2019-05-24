@@ -1,14 +1,15 @@
 from db import db
 
 class PsychologistModel(db.Model):
-    __tablename__ = 'psychologist'
+    __tablename__ = 'PSYCHOLOGIST'
 
-    crp = db.Column(db.String, primary_key=True, autoincrement=False)
-    password = db.Column(db.String)
-    date_of_birth = db.Column(db.DateTime)
-    
-    person_psy_id = db.Column(db.Integer, db.ForeignKey('person.id'), unique=True)
-    hospital_psychologists = db.relationship('PsychologistHospitalModel', backref='crp_psychologist', lazy='dynamic', cascade='all, delete-orphan')
+    crp = db.Column('crp', db.String(7), primary_key=True)
+    password = db.Column('password', db.String(255), nullable=False)
+    date_of_birth = db.Column('dt_birth', db.DateTime, nullable=False)
+    token = db.Column('token', db.String(255))
+
+    person_psy_id = db.Column('fk_person', db.Integer, db.ForeignKey('PERSON.id_person'), unique=True, nullable=False)
+    hospital_psychologists = db.relationship('PsychologistHospitalModel', backref='PSYCHOLOGIST', lazy='dynamic', cascade='all, delete-orphan')
 
     def __init__(self, crp, password, date_of_birth, person_psy_id):
         self.crp = crp
