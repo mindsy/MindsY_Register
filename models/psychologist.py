@@ -1,5 +1,6 @@
 from db import db
 
+
 class PsychologistModel(db.Model):
     __tablename__ = 'PSYCHOLOGIST'
 

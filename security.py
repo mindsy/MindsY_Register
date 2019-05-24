@@ -6,6 +6,7 @@ pwd_context = CryptContext(
         pbkdf2_sha256__default_rounds=30000
 )
 
+
 def encrypt_password(password):
     return pwd_context.encrypt(password)
 

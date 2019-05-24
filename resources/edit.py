@@ -1,11 +1,5 @@
-from flask_restful import Resource, reqparse, request
-from flask_jwt_extended import jwt_required
-from models.person import PersonModel
-from models.telephone import TelephoneModel
+from flask_restful import Resource, reqparse
 from models.psychologist import PsychologistModel
-from models.hospital import HospitalModel
-from models.psychologist_hospital import PsychologistHospitalModel
-
 from datetime import datetime
 
 

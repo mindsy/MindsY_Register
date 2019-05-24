@@ -1,7 +1,5 @@
-from flask_restful import Resource, reqparse, request
-from flask_jwt_extended import jwt_required
+from flask_restful import Resource
 from models.psychologist import PsychologistModel
-from models.person import PersonModel
 
 
 class ShowPsychologistInformationID(Resource):
