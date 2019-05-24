@@ -2,11 +2,7 @@
 from flask_restful import Resource, reqparse
 from security import encrypt_password
 from datetime import datetime
-from models.person import PersonModel
-from models.telephone import TelephoneModel
-from models.psychologist import PsychologistModel
-from models.hospital import HospitalModel
-from models.psychologist_hospital import PsychologistHospitalModel
+from static.imports import *
 
 
 class RegisterPsychologist(Resource):
@@ -74,6 +70,9 @@ class RegisterPsychologist(Resource):
         new_telephone.save_to_db()
         
         password_crip = encrypt_password(data['password'])
+
+        crp = data['crp']
+
 
         new_psychologist = PsychologistModel(data['crp'], password_crip, data['date_of_birth'], new_person.id)
         new_psychologist.save_to_db()
