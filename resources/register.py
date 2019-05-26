@@ -59,7 +59,7 @@ class RegisterPsychologist(Resource):
             return {"message": "A user with that email already exists"}, 400
 
         if PsychologistModel.find_by_crp(data['crp']):
-            return {"message": "A user with that crp already exists"}, 400
+            return {"message": "A user with that crp already exists"}, 422
 
         if TelephoneModel.find_by_number(data['number']):
             return {"message": "A user with that number already exists"}, 400

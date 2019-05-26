@@ -10,12 +10,11 @@ class ShowPsychologistInformationCRP(Resource):
             person_info = psychologists.PERSON.json()
             psychologists_info = psychologists.json()
             hospital_info = psychologists.hospital_psychologists[0].HOSPITAL.json()
-            psy_hosp_info = psychologists.hospital_psychologists[0].id_psycho_hosp
 
-            output = {'Basic Informations': [person_info],
-                      'Psychologist Information': [psychologists_info],
-                      'Hospital': [hospital_info],
-                      'id_psycho_hosp': psy_hosp_info}
+            output = {'person': person_info,
+                      'psychologist': psychologists_info,
+                      'hospital': hospital_info
+                      }
 
-            return {'User Information': output}
+            return output
         return {'message': 'User not found.'}, 404

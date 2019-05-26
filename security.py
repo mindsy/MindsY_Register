@@ -13,3 +13,4 @@ def encrypt_password(password):
 
 def check_encrypted_password(password, hashed):
     return pwd_context.verify(password, hashed)
+
