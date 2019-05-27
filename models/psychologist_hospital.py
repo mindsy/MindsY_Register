@@ -2,17 +2,20 @@ from db import db
 
 
 class PsychologistHospitalModel(db.Model):
-    __tablename__ = 'psychologist_hospital'
+    __tablename__ = 'PSYCHOLOGIST_HOSPITAL'
 
-    id_psycho_hosp = db.Column(db.Integer, primary_key=True)
+    id_psycho_hosp = db.Column('id_psycho_hosp', db.Integer, primary_key=True)
 
-    crp_psychologist_crp = db.Column(db.String, db.ForeignKey('psychologist.crp'))
-    hospital_registry_number = db.Column(db.Integer, db.ForeignKey('hospital.registry_number'))
+    crp_psychologist_crp = db.Column('crp_psychologist', db.String(7), db.ForeignKey('PSYCHOLOGIST.crp'), nullable=False)
+    hospital_registry_number = db.Column('id_hospital', db.String(14), db.ForeignKey('HOSPITAL.registry_number'),
+                                         nullable=False)
 
+    pat_pyscho_hosps = db.relationship('PatPsychoHospModel', backref='PSYCHOLOGIST_HOSPITAL', lazy='dynamic',
+                                       cascade='all, delete-orphan')
 
-    def __init__(self, hospital, crp_psychologist):
-        self.hospital = hospital
-        self.crp_psychologist = crp_psychologist
+    def __init__(self, hospital_registry_number, crp_psychologist_crp):
+        self.hospital_registry_number = hospital_registry_number
+        self.crp_psychologist_crp = crp_psychologist_crp
 
     @classmethod
     def find_by_id(cls, id):

@@ -1,22 +1,28 @@
 from db import db
+import enum
+
+
+class TelephoneTypeEnum(enum.Enum):
+    comercial = "comercial"
+    residencial = "residencial"
+    pessoal = "pessoal"
 
 
 class TelephoneModel(db.Model):
-    __tablename__ = 'telephone'
+    __tablename__ = 'TELEPHONE'
 
-    number = db.Column(db.Integer, primary_key=True, autoincrement=False)
-    telephone_type = db.Column(db.String)
+    number = db.Column('number', db.String(15), primary_key=True)
+    telephone_type = db.Column('type', db.Enum(TelephoneTypeEnum), nullable=False)
 
-    tel_person_id = db.Column(db.Integer, db.ForeignKey('person.id'))
+    tel_person_id = db.Column('id_person', db.Integer, db.ForeignKey('PERSON.id_person'))
 
-
-    def __init__(self, number, telephone_type, tel_person):
+    def __init__(self, number, telephone_type, tel_person_id):
         self.number = number
         self.telephone_type = telephone_type
-        self.tel_person = tel_person
+        self.tel_person_id = tel_person_id
 
     def json(self):
-        return {'number': self.number, 'telephone_type': self.telephone_type}
+        return {'number': self.number, 'telephone_type': self.telephone_type.value}
 
     @classmethod
     def find_by_number(cls, number):
