@@ -11,10 +11,10 @@ class ShowPsychologistInformationCRP(Resource):
             psychologists_info = psychologists.json()
             hospital_info = psychologists.hospital_psychologists[0].HOSPITAL.json()
 
-            output = {'person': person_info,
-                      'psychologist': psychologists_info,
-                      'hospital': hospital_info
-                      }
+            output = []
+            psychologists_info.update({'person': person_info}),
+            psychologists_info.update({'hospital': hospital_info})
+            output.append(psychologists_info)
 
-            return output
+            return {"psychologist": output}
         return {'message': 'User not found.'}, 404
