@@ -7,7 +7,7 @@ class PsychologistModel(db.Model):
     crp = db.Column('crp', db.String(7), primary_key=True)
     password = db.Column('password', db.String(255), nullable=False)
     date_of_birth = db.Column('dt_birth', db.DateTime, nullable=False)
-    token = db.Column('token', db.String(255))
+    token = db.Column('token', db.Text)
 
     person_psy_id = db.Column('fk_person', db.Integer, db.ForeignKey('PERSON.id_person'), unique=True, nullable=False)
     hospital_psychologists = db.relationship('PsychologistHospitalModel', backref='PSYCHOLOGIST', lazy='dynamic',
@@ -20,7 +20,7 @@ class PsychologistModel(db.Model):
         self.date_of_birth = date_of_birth
 
     def json(self):
-        return {'crp': self.crp, 'date_of_birth': self.date_of_birth.strftime("%d-%m-%Y"), 'password': self.password}
+        return {'crp': self.crp, 'date_of_birth': self.date_of_birth.strftime("%d-%m-%Y"), 'password': self.password, 'token': self.token}
 
     @classmethod
     def find_by_crp(cls, crp):
