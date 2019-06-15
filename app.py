@@ -1,18 +1,22 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask
 from flask_restful import Api
+from flask_cors import CORS
 
 from resources.register import RegisterPsychologist
 from resources.edit import EditPsychologist
 from resources.delete import DeleteUser
 from resources.user_information import ShowPsychologistInformationCRP
-from flask_cors import CORS
 
 app = Flask(__name__)
+load_dotenv(".env")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://mindsy:12345678@localhost:3306/MINDSY'
+app.config['SQLALCHEMY_DATABASE_URI'] =os.environ.get("DATABASE_URI")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['PROPAGATE_EXCEPTIONS'] = True
 
+app.config['PROPAGATE_EXCEPTIONS'] = True
+app.secret_key = os.environ.get("APP_SECRET_KEY")
 api = Api(app)
 CORS(app)
 
