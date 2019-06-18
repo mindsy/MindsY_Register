@@ -7,6 +7,7 @@ from resources.register import RegisterPsychologist
 from resources.edit import EditPsychologist
 from resources.delete import DeleteUser
 from resources.user_information import ShowPsychologistInformationCRP
+from flask_cors import CORS
 
 app = Flask(__name__)
 load_dotenv(".env")
@@ -17,7 +18,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = os.environ.get("APP_SECRET_KEY")
 api = Api(app)
-
+CORS(app)
 
 @app.before_first_request
 def create_tables():
