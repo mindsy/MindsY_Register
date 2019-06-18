@@ -6,6 +6,7 @@ from resources.edit import EditPsychologist
 from resources.delete import DeleteUser
 from resources.user_information import ShowPsychologistInformationCRP
 from flask_cors import CORS
+from db import db
 
 app = Flask(__name__)
 
@@ -17,18 +18,16 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 api = Api(app)
 CORS(app)
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
-
 
 api.add_resource(RegisterPsychologist, '/psychologist')
 api.add_resource(EditPsychologist, '/psychologist/<string:crp>')
 api.add_resource(DeleteUser, '/psychologist/<string:crp>')
 api.add_resource(ShowPsychologistInformationCRP, '/psychologist/<string:crp>')
 
+
+db.init_app(app)
+
+
 if __name__ == '__main__':
-    from db import db
-    db.init_app(app)
     app.run(debug=True, host='0.0.0.0')
 
