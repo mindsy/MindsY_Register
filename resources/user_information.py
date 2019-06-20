@@ -19,3 +19,4 @@ class ShowPsychologistInformationCRP(Resource):
             psychologists_info.update({'hospital': hospital_info})
             return psychologists_info
         return {'message': 'User not found.'}, 404
+    
