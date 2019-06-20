@@ -13,4 +13,3 @@ class TokenInformation(Resource):
 
             return output
         return {'message': 'User not found.'}, 404
-

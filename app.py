@@ -12,7 +12,7 @@ from resources.token import TokenInformation
 app = Flask(__name__)
 load_dotenv(".env")
 
-app.config['SQLALCHEMY_DATABASE_URI']="mysql+pymysql://mindsy:12345678@localhost:3306/MINDSY"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://db3mp2dauwixvkcg:t3hkuoethj9xvd1l@u0zbt18wwjva9e0v.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/w63zlckiy2z278iv'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['PROPAGATE_EXCEPTIONS'] = True
