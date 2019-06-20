@@ -7,15 +7,15 @@ from resources.register import RegisterPsychologist
 from resources.edit import EditPsychologist
 from resources.delete import DeleteUser
 from resources.user_information import ShowPsychologistInformationCRP
+from resources.token import TokenInformation
 
 app = Flask(__name__)
 load_dotenv(".env")
 
-app.config['SQLALCHEMY_DATABASE_URI'] =os.environ.get("DATABASE_URI")
+app.config['SQLALCHEMY_DATABASE_URI']="mysql+pymysql://mindsy:12345678@localhost:3306/MINDSY"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['PROPAGATE_EXCEPTIONS'] = True
-app.secret_key = os.environ.get("APP_SECRET_KEY")
 api = Api(app)
 
 
@@ -28,6 +28,7 @@ api.add_resource(RegisterPsychologist, '/psychologist')
 api.add_resource(EditPsychologist, '/psychologist/<string:crp>')
 api.add_resource(DeleteUser, '/psychologist/<string:crp>')
 api.add_resource(ShowPsychologistInformationCRP, '/psychologist/<string:crp>')
+api.add_resource(TokenInformation, '/psychologist/token/<string:crp>')
 
 if __name__ == '__main__':
     from db import db

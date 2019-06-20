@@ -18,3 +18,4 @@ class ShowPsychologistInformationCRP(Resource):
 
             return output
         return {'message': 'User not found.'}, 404
+    
