@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_restful import Api
-
 from resources.register import RegisterPsychologist
 from resources.edit import EditPsychologist
 from resources.delete import DeleteUser
 from resources.user_information import ShowPsychologistInformationCRP
+from resources.token import TokenInformation
 from flask_cors import CORS
 from db import db
 
@@ -23,6 +23,7 @@ api.add_resource(RegisterPsychologist, '/psychologist')
 api.add_resource(EditPsychologist, '/psychologist/<string:crp>')
 api.add_resource(DeleteUser, '/psychologist/<string:crp>')
 api.add_resource(ShowPsychologistInformationCRP, '/psychologist/<string:crp>')
+api.add_resource(TokenInformation, '/psychologist/token/<string:crp>')
 
 
 db.init_app(app)
