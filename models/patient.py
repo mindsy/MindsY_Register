@@ -3,14 +3,14 @@ import enum
 
 
 class ManualDomainEnum(enum.Enum):
-    RIGHT = "destro"
-    LEFT = "canhoto"
+    destro = "destro"
+    canhoto = "canhoto"
 
 
 class StatusEnum(enum.Enum):
-    PROGRESS = "andamento"
-    DONE = "finalizado"
-    WAITING = "aguardando"
+    andamento = "andamento"
+    finalizado = "finalizado"
+    aguardando = "aguardando"
 
 
 class PatientModel(db.Model):
@@ -25,25 +25,27 @@ class PatientModel(db.Model):
     status = db.Column('status', db.Enum(StatusEnum), nullable=False)
 
     person_pat_id = db.Column('fk_person', db.Integer, db.ForeignKey('PERSON.id_person'), unique=True, nullable=False)
-    accountable_patient_id_patient = db.Column('fk_accountable', db.String(11), db.ForeignKey('ACCOUNTABLE.registry_number'), unique=True)
+    accountable_patient_registry_acc = db.Column('fk_accountable', db.String(11),
+                                                 db.ForeignKey('ACCOUNTABLE.registry_number'), unique=True)
 
     pat_psycho_hosps = db.relationship('PatPsychoHospModel', backref='PATIENT', cascade='all, delete-orphan')
 
-    def __init__(self, registry_number_pat, dt_birth, scholarity, observation, manual_domain, status, person_pat_id, accountable_patient_id_patient):
+    def __init__(self, scholarity, observation, manual_domain, registry_number_pat,
+                 dt_birth, person_pat_id, accountable_patient_registry_acc, status):
         self.scholarity = scholarity
         self.observation = observation
         self.manual_domain = manual_domain
         self.registry_number_pat = registry_number_pat
         self.dt_birth = dt_birth
         self.person_pat_id = person_pat_id
-        self.accountable_patient_id_patient = accountable_patient_id_patient
+        self.accountable_patient_registry_acc = accountable_patient_registry_acc
         self.status = status
     
     def json(self):
         return {
                     'id_patient': self.id_patient, 'scholarity': self.scholarity, 'observation': self.observation,
-                    'manual_domain': self.manual_domain, 'registry number': self.registry_number_pat, 
-                    'date of birth': self.dt_birth.date().isoformat()
+                    'manual_domain': self.manual_domain.value, 'registry number': self.registry_number_pat,
+                    'date of birth': self.dt_birth.strftime("%d-%m-%Y"), 'status': self.status.value
                 }
 
     @classmethod

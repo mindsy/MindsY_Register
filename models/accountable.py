@@ -16,7 +16,6 @@ class AccountableModel(db.Model):
         self.kinship_degree = kinship_degree
         self.accountable_person_id = accountable_person_id
 
-
     def json(self):
         return {
                     'registry_number': self.registry_number_acc, 'kinship_degree': self.kinship_degree
