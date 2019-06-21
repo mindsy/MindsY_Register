@@ -6,3 +6,8 @@ from models.psychologist_hospital import PsychologistHospitalModel
 from models.accountable import AccountableModel
 from models.patient import PatientModel
 from models.pat_psycho_hosp import PatPsychoHospModel
+from models.accountable import AccountableModel
+from models.evaluation import EvaluationModel
+from models.evaluation_test import EvaluationTestModel
+from models.result import ResultModel
+from models.test import TestModel
