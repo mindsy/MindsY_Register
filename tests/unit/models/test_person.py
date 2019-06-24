@@ -7,9 +7,9 @@ class ItemTest(BaseTest):
         person = PersonModel('test', 'test@test.com')
 
         self.assertEqual(person.name, 'test',
-                         "The name of the item after creation does not equal the constructor argument.")
+                         "The name of the person after creation does not equal the constructor argument.")
         self.assertEqual(person.email, 'test@test.com',
-                         "The email of the item after creation does not equal the constructor argument.")
+                         "The email of the person after creation does not equal the constructor argument.")
 
     def test_item_json(self):
         person = PersonModel('test', 'test@gmail.com')
@@ -20,4 +20,4 @@ class ItemTest(BaseTest):
         self.assertEqual(
             person.json(),
             expected,
-            "The JSON export of the item is incorrect. Received {}, expected {}.".format(person.json(), expected))
+            "The JSON export of the person is incorrect. Received {}, expected {}.".format(person.json(), expected))
