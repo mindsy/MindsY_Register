@@ -1,7 +1,6 @@
-from datetime import datetime
-
 from static.imports import *
 from tests.base_test import BaseTest
+from datetime import datetime
 
 
 class PersonTest(BaseTest):
@@ -96,3 +95,72 @@ class PersonTest(BaseTest):
             psychologist.save_to_db()
 
             self.assertEqual(person.psychologists.crp, '0000000')
+
+    def test_crud_accountables(self):
+        with self.app_context():
+            person = PersonModel('test', 'test@test.com')
+            person.save_to_db()
+
+            accountable = AccountableModel('00000000000', 'test', 1)
+
+            self.assertIsNone(AccountableModel.find_by_registry_number_acc('00000000000'), "Found a accountable with "
+                                                                                           "this registry number")
+            accountable.save_to_db()
+
+            self.assertIsNotNone(AccountableModel.find_by_registry_number_acc('00000000000'),
+                                 "Did not find a accountable with registry number '00000000000' after save_to_db")
+
+            accountable.delete_from_db()
+
+            self.assertIsNone(AccountableModel.find_by_registry_number_acc('00000000000'), "Found a accountable with "
+                                                                                           "this registry number ")
+
+    def test_store_relationship_accountables(self):
+        with self.app_context():
+            person = PersonModel('test', 'test@test.com')
+            accountable = AccountableModel('00000000000', 'test', 1)
+
+            person.save_to_db()
+            accountable.save_to_db()
+
+            self.assertEqual(person.accountables.registry_number_acc, '00000000000')
+
+    def test_crud_patient(self):
+        with self.app_context():
+            person = PersonModel('test', 'test@test.com')
+            person.save_to_db()
+
+            accountable = AccountableModel('00000000000', 'test', 1)
+            accountable.save_to_db()
+
+            date_text = "22-09-2018"
+            date = datetime.strptime(date_text, '%d-%m-%Y').date()
+
+            patient = PatientModel('test', 'test', 'canhoto', '00000000000', date, 1, '00000000000', 'andamento')
+
+            self.assertIsNone(PatientModel.find_by_registry_number_pat('00000000000'), "Found a patient with "
+                                                                                       "this registry_number")
+            patient.save_to_db()
+
+            self.assertIsNotNone(PatientModel.find_by_registry_number_pat('00000000000'),
+                                 "Did not find a accountable with registry number '00000000000' after save_to_db")
+
+            patient.delete_from_db()
+
+            self.assertIsNone(PatientModel.find_by_registry_number_pat('00000000000'), "Found a accountable with "
+                                                                                           "this registry number ")
+
+    def test_store_relationship_patient(self):
+        with self.app_context():
+            person = PersonModel('test', 'test@test.com')
+            accountable = AccountableModel('00000000000', 'test', 1)
+            date_text = "22-09-2018"
+            date = datetime.strptime(date_text, '%d-%m-%Y').date()
+
+            patient = PatientModel('test', 'test', 'canhoto', '00000000000', date, 1, '00000000000', 'andamento')
+
+            person.save_to_db()
+            accountable.save_to_db()
+            patient.save_to_db()
+
+            self.assertEqual(person.patients.registry_number_pat, '00000000000')
