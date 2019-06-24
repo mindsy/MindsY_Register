@@ -3,7 +3,6 @@ language: python
 
 # Dizendo ao Travis a versão do python que deve rodar o app
 python:
-  - "2.7"
   - "3.6"
   - "nightly"
 

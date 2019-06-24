@@ -6,13 +6,14 @@ import json
 
 
 class PsychologistTest(BaseTest):
+
     def test_delete_psychologist(self):
         with self.app() as c:
             with self.app_context():
                 date_text = "22-09-2018"
                 date = datetime.strptime(date_text, '%d-%m-%Y').date()
-
-                PsychologistModel('0000000', 'test', date, 1).save_to_db()
+                person = PersonModel('test', 'test@test.com').save_to_db()
+                PsychologistModel('0000000', 'Test123', date, 1).save_to_db()
                 r = c.delete('/psychologist/0000000')
 
                 self.assertEqual(r.status_code, 200)
