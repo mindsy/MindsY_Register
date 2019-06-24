@@ -1,10 +1,10 @@
 from datetime import datetime
 
 from static.imports import *
-from tests.base_test import BaseTest
+from tests.unit.unit_base_test import UnitBaseTest
 
 
-class ItemTest(BaseTest):
+class ItemTest(UnitBaseTest):
     def test_create_item(self):
         date_text = "22-09-2018"
         date = datetime.strptime(date_text, '%d-%m-%Y').date()

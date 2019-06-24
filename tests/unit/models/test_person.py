@@ -1,9 +1,9 @@
 from models.person import PersonModel
-from tests.base_test import BaseTest
+from tests.unit.unit_base_test import UnitBaseTest
 
 
-class ItemTest(BaseTest):
-    def test_create_person(self):
+class PersonTest(UnitBaseTest):
+    def test_create_item(self):
         person = PersonModel('test', 'test@test.com')
 
         self.assertEqual(person.name, 'test',

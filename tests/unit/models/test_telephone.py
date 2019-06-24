@@ -1,8 +1,8 @@
 from models.telephone import TelephoneModel
-from tests.base_test import BaseTest
+from tests.unit.unit_base_test import UnitBaseTest
 
 
-class ItemTest(BaseTest):
+class ItemTest(UnitBaseTest):
     def test_create_item(self):
         telephone = TelephoneModel('000000000', 'comercial', None)
 

@@ -5,20 +5,21 @@ language: python
 python:
   - "2.7"
   - "3.6"
+  - "nightly"
 
 # Comando para instalar dependencias no arquivo requirements.txt
 install:
+   - pip install pytest
    - pip install -r requirements.txt
-        
+
 
 # Comando para rodar o teste  
 # Este e o script que ativa o travis para rodar os testes
 
-script: true
-  - nosetests --with-coverage --coverage report
-            
-#script: 
-#  - pytest
+#script: true
+#  - nosetests --with-coverage --coverage report
+
+script: python -m pytest tests/
 
 # This returns the coverage and let's coveralls know the coverage percent. 
 # Note that travis will build your system and get the coverage. 
