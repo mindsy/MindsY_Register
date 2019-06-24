@@ -9,7 +9,7 @@ class ItemTest(BaseTest):
         self.assertEqual(person.name, 'test',
                          "The name of the item after creation does not equal the constructor argument.")
         self.assertEqual(person.email, 'test@test.com',
-                         "The price of the item after creation does not equal the constructor argument.")
+                         "The email of the item after creation does not equal the constructor argument.")
 
     def test_item_json(self):
         person = PersonModel('test', 'test@gmail.com')
