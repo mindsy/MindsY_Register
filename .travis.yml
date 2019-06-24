@@ -15,10 +15,10 @@ install:
 # Comando para rodar o teste  
 # Este e o script que ativa o travis para rodar os testes
 
-#script: true
-#  - nosetests --with-coverage --coverage report
+script: true
+  - nosetests --with-coverage --coverage report
 
-script: python -m pytest tests/
+after script: python -m pytest tests/
 
 # This returns the coverage and let's coveralls know the coverage percent. 
 # Note that travis will build your system and get the coverage. 
