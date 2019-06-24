@@ -3,7 +3,7 @@ from tests.base_test import BaseTest
 
 
 class ItemTest(BaseTest):
-    def test_create_item(self):
+    def test_create_person(self):
         person = PersonModel('test', 'test@test.com')
 
         self.assertEqual(person.name, 'test',
@@ -11,9 +11,9 @@ class ItemTest(BaseTest):
         self.assertEqual(person.email, 'test@test.com',
                          "The email of the person after creation does not equal the constructor argument.")
 
-    def test_item_json(self):
+    def test_person_json(self):
         person = PersonModel('test', 'test@gmail.com')
-        expected ={
+        expected = {
             'id_person': None, 'name': 'test', 'email': 'test@gmail.com', 'telephone': []
         }
 
