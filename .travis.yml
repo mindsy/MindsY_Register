@@ -1,0 +1,32 @@
+# Definindo linguagem
+language: python
+
+# Dizendo ao Travis a versão do python que deve rodar o app
+python:
+  - "2.7"
+  - "3.6"
+
+# Comando para instalar dependencias no arquivo requirements.txt
+install:
+   - pip install -r requirements.txt
+        
+
+# Comando para rodar o teste  
+# Este e o script que ativa o travis para rodar os testes
+
+script: true
+  - nosetests --with-coverage --coverage report
+            
+#script: 
+#  - pytest
+
+# This returns the coverage and let's coveralls know the coverage percent. 
+# Note that travis will build your system and get the coverage. 
+# It cannnot display, therefore coveralls becomes important to get the coverage
+# You can also use after_success
+#after_script:
+# - coveralls
+                  
+# Using codecov to get coverage
+#after_success:
+# - codecov
